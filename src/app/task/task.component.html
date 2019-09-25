@@ -1,0 +1,102 @@
+<h4>Task Management</h4>
+<form method="post" action="#">
+    <div class="row gtr-uniform">  
+
+            <div class="col-6 col-12-xsmall" *ngIf="!isEdit">
+                    <label>Project:</label>
+                    <ng-autocomplete 
+                                [data]="data"                               
+                                [searchKeyword]="keyword"
+                                (selected)='selectEvent($event, "project")'
+                                (inputChanged)='onChangeSearch($event)'
+                                (inputFocused)='onFocused($event)'
+                                [itemTemplate]="itemTemplate"
+                                [notFoundTemplate]="notFoundTemplate">                                 
+                            </ng-autocomplete>
+                                
+                            <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.Project_Name"></a>
+                            </ng-template>
+                                
+                            <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                </div>
+ 
+
+        <div class="col-12 col-12-xsmall">
+                <label>Task:</label>
+                <input type="text" name="task" id="task" value="" placeholder="Task name"
+                    [(ngModel)]="taskname" />
+            </div> 
+
+        <div class="col-6 col-12-xsmall"  *ngIf="!isEdit">
+            <input type="checkbox" id="parentTask" [(ngModel)]="parent_task" name="parentTask">
+            <label for="parentTask">Parent task</label>
+        </div> 
+        
+        <div class="col-12 col-12-xsmall"  *ngIf="parent_task">
+                <label>Parent Task:</label>
+                <ng-autocomplete  
+                [data]="datat"
+                [searchKeyword]="keywordt"
+                (selected)='selectEvent($event, "parent")'
+                (inputChanged)='onChangeSearch($event)'
+                (inputFocused)='onFocused($event)'
+                [itemTemplate]="itemTemplate"
+                [notFoundTemplate]="notFoundTemplate">                                 
+            </ng-autocomplete>
+                
+            <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.Parent_Task"></a>
+            </ng-template>
+                
+            <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+            </ng-template>
+            </div>
+ 
+            <div class="col-12 col-12-xsmall">
+                    <label>Priority:</label>
+                    <input type="range"  [(ngModel)]="priority" name="points" id="rangeCtl" min="0" max="30">
+                </div>
+
+        <div class="col-6 col-12-xsmall">
+            <label>Start Time:</label>
+            <input type="text" name="startTime"  [(ngModel)]="startdate" id="startTime" value="" placeholder="" />
+
+        </div>
+        <div class="col-6 col-12-xsmall">
+                <label>End Time:</label>
+                <input type="text" name="endTime"  [(ngModel)]="enddate" id="endTime" value="" placeholder="" />  
+          </div>
+          <div class="col-12 col-12-xsmall"  *ngIf="!isEdit">
+                <label>User:</label>
+             <ng-autocomplete 
+                [data]="datau"
+                [searchKeyword]="keywordu"
+                (selected)='selectEvent($event, "user")'
+                (inputChanged)='onChangeSearch($event)'
+                (inputFocused)='onFocused($event)'
+                [itemTemplate]="itemTemplate"
+                [notFoundTemplate]="notFoundTemplate">                                 
+            </ng-autocomplete>
+                
+            <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.First_Name + item.Last_Name"></a>
+            </ng-template>
+                
+            <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+            </ng-template>
+        </div>
+ 
+        <div class="col-12 col-12-xsmall">
+            <ul class="actions" style="float: right">
+                <li><input type="button" value="{{btnText}}" (click)="AddTask()" class="primary" /></li>
+                <li><input type="reset" id="btnReset" [disabled]="isEdit" value="Reset" /></li>
+            </ul>
+        </div>   
+
+    </div>
+</form>

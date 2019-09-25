@@ -1,0 +1,120 @@
+<h4>Project Dashboard</h4>
+<form method="post" action="#">
+        <div class="row gtr-uniform"> 
+            <label id="errormessage">{{error}}</label><input type="hidden" name="project_id" [(ngModel)]="id" />    
+            <div class="col-12 col-12-xsmall">
+                <label>Project:</label>
+                <input type="text" name="projectname" id="projectname" value="" placeholder="Project Name"
+                    [(ngModel)]="projectName" />
+            </div>
+
+            <div class="col-3 col-12-xsmall">
+                <input type="checkbox" id="setDate"  [(ngModel)]="setDate" name="setDate">
+                <label for="setDate" style="white-space: nowrap">Set Start and End Date</label>
+            </div>
+            <div class="col-3 col-12-xsmall">                    
+                <input type="text" name="start_date" [disabled]="!setDate" id="start_date" value="" placeholder="Start Date"
+                [(ngModel)]="start_Date" value="{{start_Date | date:'yyyy-MM-dd'}}" (ngModelChange)="start_Date=$event" />  
+
+            </div>
+            <div class="col-3 col-12-xsmall">
+                <input type="text" name="end_date" maxlength="10" [disabled]="!setDate" id="end_date" value="" placeholder="End Date"
+                    [(ngModel)]="end_Date" />
+            </div>
+            <div class="col-12 col-12-xsmall">
+                <label>Priority: </label>
+                <input #prioritySelector type="range"  [(ngModel)]="priority" name="priority" id="rangeCtl" min="0" max="30" (ngModelChange)="setRam($event)" value="0">
+                {{ selectedRam }}   
+            </div>
+    
+            <div class="col-12 col-12-xsmall">
+                <label>Manager:</label>
+                <input type="text" name="manager" [disabled]="isEdit" [(ngModel)]="manager" id="manager" value="" placeholder="Manager" />
+    
+            </div> 
+    
+    
+            <div class="col-12 col-12-xsmall">
+                <ul class="actions" style="float: right">
+                    <li><input type="button" value="{{btnText}}" (click)="AddProject()" class="primary" /></li>
+                    <li><input type="reset" value="Reset" [disabled]="isEdit" class="" /></li>
+                </ul>
+            </div>
+    
+    
+    
+    
+            <div class="col-12 col-12-xsmall">
+                <hr>
+            </div>
+    
+            <div class="col-6 col-12-xsmall">
+                <input type="text" name="search" id="search" value="" [(ngModel)]="searchText" placeholder="Search..." />
+            </div>
+
+            <div class="col-6 col-12-xsmall" *ngIf="!isEdit">
+                <label>Project:</label>
+                <ng-autocomplete 
+                            [data]="data"                               
+                            [searchKeyword]="keyword"
+                            (selected)='selectEvent($event, "project")'
+                            (inputChanged)='onChangeSearch($event)'
+                            (inputFocused)='onFocused($event)'
+                            [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate">                                 
+                        </ng-autocomplete>
+                            
+                        <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.Project_Name"></a>
+                        </ng-template>
+                            
+                        <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                        </ng-template>
+            </div>
+    
+            <div class="col-2" style="text-align: right">
+                <label>Sory by:</label>
+            </div>
+            <div class="col-4">
+                <select name="sortorder" id="sortorder" [(ngModel)]="ddlSort">
+                    <option value="Start_Date">Start Date</option>
+                    <option value="End_Date">End Date</option>
+                    <option value="Priority">Priority</option>
+                    <option value="CompletedTask">Completed</option>
+                </select>
+            </div>
+            <div class="col-12 col-12-xsmall">
+                <hr>
+            </div> 
+     
+                
+            <div class="row gtr-uniform result col-12 col-12-xsmall" *ngFor="let l of projectList| filterme:searchText | sortme: ddlSort">
+    
+                <div class="col-8 col-12-xsmall">
+                    <div class="col-12 col-12-xsmall">
+                        <h2>{{ l.Project_Name}}</h2>
+                        <label>Number of task:<code>{{l.NoOfTasks}}</code></label> 
+                        <label style="float: left">Start Date:<code>{{l.Start_Date | date: 'dd/MM/yyyy'}}</code></label>                   
+                        <label style="float: left">End Date:<code>{{l.End_Date | date: 'dd/MM/yyyy'}}</code></label>
+                        <label style="float: left">Completed:<code>{{l.CompletedTask}}%</code></label> 
+                    </div> 
+    
+                </div>
+                <div class="col-2 col-12-xsmall">
+                    <label>Priority</label>
+                    <h3>{{l.Priority}}</h3>
+                </div>
+                <div class="col-2 col-12-xsmall">
+                    <a (click)="UpdateProject(l)">Update</a>-<a (click)="SuspendProject(l.Project_ID)">Suspend</a>
+                </div>
+    
+            </div>
+    
+    
+        </div> 
+<script>
+</script>
+
+
+    </form>

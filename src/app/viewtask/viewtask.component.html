@@ -1,0 +1,82 @@
+<h4>View Task</h4>
+<div class="row gtr-uniform"> 
+
+<div class="col-6 col-12-xsmall">
+    <label>Project:</label>
+    <ng-autocomplete 
+                [data]="data"
+                [searchKeyword]="keyword"
+                (selected)='selectEvent($event)'
+                (inputChanged)='onChangeSearch($event)'
+                (inputFocused)='onFocused($event)'
+                [itemTemplate]="itemTemplate"
+                [notFoundTemplate]="notFoundTemplate">                                 
+            </ng-autocomplete>
+                
+            <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.Project_Name"></a>
+            </ng-template>
+                
+            <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+            </ng-template>
+</div>
+ 
+<div class="col-4">
+        <label>Sory by:</label>
+    <select name="sortorder" id="sortorder" [(ngModel)]="ddlSort">
+        <option value="Start_Date">Start Date</option>
+        <option value="End_Date">End Date</option>
+        <option value="Priority">Priority</option>
+        <option value="Status">Completed</option>
+    </select>
+</div>
+<div class="col-12 col-12-xsmall">
+    <hr>
+</div>
+
+</div>
+
+<div class="table-wrapper">
+        <label id="errormessage">{{error}}</label>
+        
+    <table>
+
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Parent Task</th>
+            <th>Priority</th>
+            <th>Start</th>
+            <th>End</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let l of taskList|sortme: ddlSort">
+            <td>
+                {{l.Task_Name}}
+            </td>
+            <td>
+                {{l.ParentTask_Name}}
+            </td>
+            <td>
+                {{l.Priority}}
+            </td>
+            <td>
+                {{l.Start_Date |  date: 'dd/MM/yyyy'}}
+            </td>
+            <td>
+                {{l.End_Date |  date: 'dd/MM/yyyy'}}
+            </td>
+            <td >
+                <a *ngIf="l.Status!='C'" (click)="UpdateTask(l.Task_ID)">Edit</a> -
+                <a *ngIf="l.Status!='C'" (click)="EndTask(l.Task_ID)">End Task</a>
+            </td>
+
+        </tr>
+
+    </tbody></table>
+
+
+</div>

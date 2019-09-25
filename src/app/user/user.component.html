@@ -1,0 +1,73 @@
+<h3>User Management</h3>
+<form method="post" action="#">
+        <div class="row gtr-uniform"> 
+
+                <label id="errormessage">{{error}}</label>
+                <input type="hidden" name="User_Id" [(ngModel)]="User_Id" />
+    
+            <div class="col-12 col-12-xsmall">
+                <label>First Name:</label>
+                <input type="text" name="firstName" id="firstName" value="" placeholder="First Name"
+                    [(ngModel)]="First_Name" />
+            </div>
+            <div class="col-12 col-12-xsmall">
+                    <label>Last Name:</label>
+                    <input type="text" name="lastName" id="lastName" value="" placeholder="Last Name"
+                        [(ngModel)]="Last_Name" />
+                </div>
+                <div class="col-12 col-12-xsmall">
+                        <label>Employee ID:</label>
+                        <input type="text" name="employeeID" id="employeeID" style="width:50%" value="" placeholder="Employee ID"
+                            [(ngModel)]="employee_ID" />
+                    </div> 
+    
+            <div class="col-12 col-12-xsmall">
+                <ul class="actions" style="float: right">
+                    <li><input type="button" value="{{btnText}}" (click)="AddUser()" class="primary" /></li>
+                    <li><input type="reset" [disabled]="isEdit" value="Reset" class="" /></li>
+                </ul>
+            </div> 
+    
+    
+    
+            <div class="col-12 col-12-xsmall">
+                <hr>
+            </div>
+    
+            <div class="col-6 col-12-xsmall">
+                <input type="text" name="search" id="search" value="" [(ngModel)]="searchText" placeholder="Search..." />
+            </div>
+    
+            <div class="col-2" style="text-align: right">
+                <label>Sory by:</label>
+            </div>
+            <div class="col-4">
+                <select name="sortorder" id="sortorder" [(ngModel)]="ddlSort">
+                    <option value="First_Name">First Name</option>
+                    <option value="Last_Name">Last Name</option>
+                    <option value="Employee_ID">Employee ID</option> 
+                </select>
+            </div>
+            <div class="col-12 col-12-xsmall">
+                <hr>
+            </div> 
+     
+                
+            <div class="row gtr-uniform result col-12 col-12-xsmall" *ngFor="let l of userList| filterme:searchText | sortme: ddlSort">    
+                 
+                <div class="col-8 col-12-xsmall">
+                    <h2>Employee ID: {{ l.Employee_ID }}</h2>
+                    <label>First Name<code>{{l.First_Name}}</code></label> 
+                    <label>Last Name<code>{{l.Last_Name}}</code></label> 
+                </div>     
+                
+                <div class="col-4 col-12-xsmall">
+                    <a (click)="UpdateUser(l)">Edit</a> -
+                    <a (click)="DeleteUser(l.User_ID)">Delete</a>
+                </div>
+    
+            </div>
+    
+    
+        </div>
+    </form>
