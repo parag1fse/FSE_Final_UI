@@ -141,7 +141,7 @@ export class TaskComponent implements OnInit {
               
               console.log(this.data);
               this.id = this.taskDetail.Task_ID;
-              this.user = this.taskDetail.users;
+              this.user = this.taskDetail.User_ID;
               this.parent_task_id = this.taskDetail.Parent_ID;
               this.project_id =this.taskDetail.Project_ID;
               this.priority =this.taskDetail.Priority;
@@ -184,16 +184,36 @@ export class TaskComponent implements OnInit {
 
     if(this.isEdit){
 
+      //Get Records from table
+      const params = new HttpParams().set('_page', "1").set('_limit', "1");
+      this.httpClient.get<any[]>("http://localhost:54949/api/tasks/" + this.id,
+          { params }).subscribe(
+            data => {            
+              this.taskDetail = data;                
+              this.id = this.taskDetail.Task_ID;
+              this.user = this.taskDetail.User_ID;
+              this.parent_task_id = this.taskDetail.Parent_ID;
+              this.project_id =this.taskDetail.Project_ID;
+              this.priority =this.taskDetail.Priority;
+              this.startdate = this.taskDetail.Start_Date;
+              this.enddate=  this.taskDetail.End_Date;
+              this.taskname =this.taskDetail.Task_Name;
+              this.Status = this.taskDetail.Status;
+            }         
+          );  
+
 
       this.httpClient.put("http://localhost:54949/api/tasks/" + this.id,
       {
-        //"Parent_ID": this.parent_task_id, 
+        "Parent_ID": this.parent_task_id, 
         "Task_name": this.taskname,
         "Start_Date": this.startdate,
         "End_Date": this.enddate,
         "Priority": this.priority, 
-        //"user_id": this.user,
-        "Task_ID": this.id
+        "User_ID": this.user,
+        "Task_ID": this.id,
+        "Status": this.Status,
+        "Project_ID": this.project_id
       })
       .subscribe(
         data => {
@@ -219,7 +239,7 @@ export class TaskComponent implements OnInit {
         "End_Date": this.enddate,
         "Priority": this.priority,
         "Status": "I",
-        "user_id": this.user
+        "User_ID": this.user
       })
       .subscribe(
         data => {

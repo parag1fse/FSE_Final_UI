@@ -1,4 +1,4 @@
-<h4>Task Management</h4>
+<h4>Task Dashboard</h4>
 <form method="post" action="#">
     <div class="row gtr-uniform">  
 
@@ -30,7 +30,7 @@
                     [(ngModel)]="taskname" />
             </div> 
 
-        <div class="col-6 col-12-xsmall"  *ngIf="!isEdit">
+        <div class="col-6 col-12-xsmall"  >
             <input type="checkbox" id="parentTask" [(ngModel)]="parent_task" name="parentTask">
             <label for="parentTask">Parent task</label>
         </div> 
@@ -70,7 +70,7 @@
                 <label>End Time:</label>
                 <input type="text" name="endTime"  [(ngModel)]="enddate" id="endTime" value="" placeholder="" />  
           </div>
-          <div class="col-12 col-12-xsmall"  *ngIf="!isEdit">
+          <div class="col-12 col-12-xsmall" >
                 <label>User:</label>
              <ng-autocomplete 
                 [data]="datau"
