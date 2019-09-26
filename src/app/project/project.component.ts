@@ -111,7 +111,7 @@ export class ProjectComponent implements OnInit {
               if (data){
                 this.error = "Project Deleted Sucessfully!";
               }else{
-                this.error = "Please delete task and then Project";
+                this.error = "Active task associated for this project. You can not suspend the project.";
               }
              
               this.isEdit = false;
