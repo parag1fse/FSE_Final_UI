@@ -52,27 +52,7 @@
                 <input type="text" name="search" id="search" value="" [(ngModel)]="searchText" placeholder="Search..." />
             </div>
 
-            <div class="col-6 col-12-xsmall" *ngIf="!isEdit">
-                <label>Project:</label>
-                <ng-autocomplete 
-                            [data]="data"                               
-                            [searchKeyword]="keyword"
-                            (selected)='selectEvent($event, "project")'
-                            (inputChanged)='onChangeSearch($event)'
-                            (inputFocused)='onFocused($event)'
-                            [itemTemplate]="itemTemplate"
-                            [notFoundTemplate]="notFoundTemplate">                                 
-                        </ng-autocomplete>
-                            
-                        <ng-template #itemTemplate let-item>
-                        <a [innerHTML]="item.Project_Name"></a>
-                        </ng-template>
-                            
-                        <ng-template #notFoundTemplate let-notFound>
-                        <div [innerHTML]="notFound"></div>
-                        </ng-template>
-            </div>
-    
+                
             <div class="col-2" style="text-align: right">
                 <label>Sory by:</label>
             </div>
